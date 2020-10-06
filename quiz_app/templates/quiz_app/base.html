@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {% if title %}
+    <title>EnerQuiz - {{ title }}</title>
+  {% else %}
+    <title>EnerQuiz</title>
+  {% endif %}
+  {% load static %}
+  <link rel="SHORTCUT ICON" type="image/png" href="{% static 'favicon.ico' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+  {% block head %}{% endblock head %}
+</head>
+<body>
+
+  <nav class="nav-bar">
+    <div class="title">
+      <a href="{% url 'quiz-home' %}">
+        EnerQuiz
+      </a>
+    </div>
+    <ul class="links">
+      <li>
+        <a href="{% url 'quiz-quiz' %}">
+          Take Quiz
+        </a>
+      </li>
+      <li>
+        <a href="{% url 'quiz-about' %}">
+          About
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <main class="container">
+    {% block content %}{% endblock content %}
+  </main>
+</body>
+</html>

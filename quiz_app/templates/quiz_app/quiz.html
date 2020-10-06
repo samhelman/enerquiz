@@ -1,0 +1,94 @@
+{% extends 'quiz_app/base.html' %}
+{% block content %}
+{% for question in questions %}
+{% if question.id == 1 %}
+<div id="question-{{ question.id }}" class="card quiz-card first-question">
+{% else %}
+<div id="question-{{ question.id }}" class="card quiz-card">
+{% endif %}
+  <div class="card-content">
+    <h3>{{ question.question }}</h3>
+    <p id="correct-answer-{{ question.id }}" hidden>{{ question.correct_answer }}</p>
+    <div class="btn-container">
+      <button id="{{ question.id }}-answer-1" onclick="scrollQuestion('{{ question.id }}', '{{ question.id }}-answer-1')" class="btn btn-answer" value="{{ question.answer_1 }}">{{ question.answer_1 }}</button>
+      <button id="{{ question.id }}-answer-2" onclick="scrollQuestion('{{ question.id }}', '{{ question.id }}-answer-2')" class="btn btn-answer" value="{{ question.answer_2 }}">{{ question.answer_2 }}</button>
+      <button id="{{ question.id }}-answer-3" onclick="scrollQuestion('{{ question.id }}', '{{ question.id }}-answer-3')" class="btn btn-answer" value="{{ question.answer_3 }}">{{ question.answer_3 }}</button>
+      <button id="{{ question.id }}-answer-4" onclick="scrollQuestion('{{ question.id }}', '{{ question.id }}-answer-4')" class="btn btn-answer" value="{{ question.answer_4 }}">{{ question.answer_4 }}</button>
+    </div>
+    <div class="open-container" onclick="openSource('source-{{ question.id }}')">
+      <span class="source">Source</span>
+      <div class="open">
+        {% load static %}
+        <img src="{% static 'up.svg' %}"></img>
+      </div>
+    </div>
+    <div class="question-number">
+      <div class="open"></div>
+      <span class="source">Q{{ question.id }}/10</span>
+    </div>
+  </div>
+  <div id="source-{{ question.id }}" class="source-container">
+    <div class="close">
+      {% load static %}
+      <img onclick="closeSource('source-{{ question.id }}')" src="{% static 'down.svg' %}"></img>
+    </div>
+    <div class="card-content source-content">
+      <p>You can find the answer here:</p>
+      <h4>{{ question.source }}</h4>
+    </div>
+  </div>
+</div>
+{% endfor %}
+
+<script>
+
+  //open source page of given card id
+  function openSource(id) {
+    sourceButton = document.getElementById(id);
+    sourceButton.style.transform = 'translateY(0)';
+  }
+
+  //close source page of given card id
+  function closeSource(id) {
+    sourceButton = document.getElementById(id);
+    sourceButton.style.transform = 'translateY(100%)';
+  }
+
+  //tracks the number of correct answers
+  var score = 0;
+
+  //bring in the next question
+  function scrollQuestion(id, answer) {
+    currentQuestion = document.getElementById('question-' + id)
+    //if the answer is correct, increment score
+    if (checkAnswer(id, answer)) {
+      score += 1
+    }
+    console.log(score)
+
+    //get the next question element by incrementing the id of the current question
+    nextId = (parseInt(id) + 1).toString()
+    nextQuestion = document.getElementById('question-' + nextId)
+    
+    //scroll out current question
+    currentQuestion.classList.add('last-question')
+    //if there is another question, scroll to it, otherwise redirect to the results page
+    if (nextQuestion) {
+      nextQuestion.classList.add('next-question')
+    } else {
+      setTimeout(function(){location.href = "/results/" + score}, 1000)
+    }
+  }
+
+  //returns true if the value of the button clicked is equal to the innter html of the correct answer element
+  function checkAnswer(id, answer) {
+    correct_answer = document.getElementById('correct-answer-' + id).innerHTML;
+    answer = document.getElementById(answer).value
+    if (correct_answer == answer) {
+      return true
+    }
+    return false
+  }
+
+</script>
+{% endblock %}

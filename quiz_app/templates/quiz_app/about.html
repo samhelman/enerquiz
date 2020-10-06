@@ -1,0 +1,18 @@
+{% extends 'quiz_app/base.html' %}
+{% block content %}
+<div class="about">
+  <h1>About</h1>
+  <p>
+    The EnerQuiz is a resource to help you test your knowledge in preparation for the NRCan Foundations and Energy Advisor Exams.
+  </p>
+  <p>
+    Take the quiz to see how you stack up!
+  </p>
+</div>
+<div class="image-container">
+  {% load static %}
+  <img class="image-item" src="{% static 'about_1.png' %}">
+  <img class="image-item" src="{% static 'about_2.png' %}">
+  <img class="image-item" src="{% static 'about_3.png' %}">
+</div>
+{% endblock %}

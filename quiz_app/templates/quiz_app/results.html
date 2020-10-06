@@ -1,0 +1,23 @@
+{% extends 'quiz_app/base.html' %}
+{% block content %}
+  <div class="card results-card">
+    <div class="card-content results-content">
+      <h1>Results</h1>
+      <div>
+        <h4>You scored:</h4>
+        <h1>{{ results.score }}/10</h1>
+      </div>
+      {% if 50 >= results.rank %}
+      <div>
+        <p>That puts you in the top</p>
+        <h2>{{ results.rank }}%</h2>
+        <p>of participants.</p>
+      </div>
+      {% endif %}
+      <div class="btn-container">
+        <a href="{% url 'quiz-quiz' %}" class="btn btn-highlight">Take Again...</a>
+        <a href="https://www.energuy.ca/careers" class="btn btn-secondary">Become an Energuy</a>
+      </div>
+    </div>
+  </div>
+{% endblock %}

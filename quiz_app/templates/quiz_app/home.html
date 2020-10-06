@@ -1,0 +1,20 @@
+{% extends 'quiz_app/base.html' %}
+{% block head %}
+<script>
+  //preloading background image
+  var pic = new Image();
+  pic.src = "static/background.jpg";
+</script>
+{% endblock head %}
+{% block content %}
+<div class="background"></div>
+<article class="title-page">
+  <div class="heading-container">
+    <h1 class="heading">Think you have what it takes?</h1>
+  </div>
+  <div class="btn-container">
+    <a href="{% url 'quiz-quiz' %}" class="btn btn-highlight">Take The Quiz</a>
+    <a href="https://www.energuy.ca/careers" target="_blank" class="btn btn-secondary">Become an Energuy</a>
+  </div>
+</article>
+{% endblock content %}
